@@ -1,3 +1,14 @@
+@extends('layouts.app')
+
+@section('content')
+
+<h2>Data Alat</h2>
+
+<table class="table">
+...
+</table>
+
+@endsection
 <h2>Tambah Alat</h2>
 
 <form method="POST" action="/alat">

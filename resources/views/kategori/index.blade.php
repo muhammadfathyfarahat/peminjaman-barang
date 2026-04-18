@@ -1,3 +1,14 @@
+@extends('layouts.app')
+
+@section('content')
+
+<h2>Data Alat</h2>
+
+<table class="table">
+...
+</table>
+
+@endsection
 <h2>Data Kategori</h2>
 
 <a href="/kategori/create">+ Tambah</a>

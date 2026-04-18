@@ -1,2 +1,4 @@
-<h1>Peminjam</h1>
-<a href="/pinjam">Pinjam</a>
+<form action="/kembali/{{ $d->id }}" method="POST">
+    @csrf
+    <button>Kembalikan</button>
+</form>

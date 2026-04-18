@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Http\Controllers;
+
 use App\Models\Peminjaman;
 use App\Models\Alat;
 use Illuminate\Http\Request;
@@ -16,7 +18,11 @@ class PeminjamanController extends Controller
     // 🔹 SIMPAN PINJAMAN
     public function store(Request $r)
     {
-        $alat = Alat::find($r->alat_id);
+        $r->validate([
+            'alat_id' => 'required'
+        ]);
+
+        $alat = Alat::findOrFail($r->alat_id);
 
         if ($alat->stok < 1) {
             return back()->with('error','Stok habis');
@@ -35,7 +41,7 @@ class PeminjamanController extends Controller
     // 🔹 LIST PEMINJAMAN (peminjam)
     public function index()
     {
-        $data = Peminjaman::where('user_id',auth()->id())->get();
+        $data = Peminjaman::where('user_id', auth()->id())->get();
         return view('peminjaman.index', compact('data'));
     }
 
@@ -49,18 +55,18 @@ class PeminjamanController extends Controller
     // 🔹 APPROVE
     public function approve($id)
     {
-        $p = Peminjaman::find($id);
-        $alat = Alat::find($p->alat_id);
+        $p = Peminjaman::findOrFail($id);
+        $alat = Alat::findOrFail($p->alat_id);
 
         if ($alat->stok < 1) {
             return back()->with('error','Stok habis');
         }
 
-        $p->status = 'disetujui';
-        $p->save();
+        $p->update([
+            'status' => 'disetujui'
+        ]);
 
-        $alat->stok -= 1;
-        $alat->save();
+        $alat->decrement('stok');
 
         return back()->with('success','Disetujui');
     }
@@ -68,15 +74,15 @@ class PeminjamanController extends Controller
     // 🔹 PENGEMBALIAN
     public function kembali($id)
     {
-        $p = Peminjaman::find($id);
-        $alat = Alat::find($p->alat_id);
+        $p = Peminjaman::findOrFail($id);
+        $alat = Alat::findOrFail($p->alat_id);
 
-        $p->status = 'dikembalikan';
-        $p->tanggal_kembali = now();
-        $p->save();
+        $p->update([
+            'status' => 'dikembalikan',
+            'tanggal_kembali' => now()
+        ]);
 
-        $alat->stok += 1;
-        $alat->save();
+        $alat->increment('stok');
 
         return back()->with('success','Dikembalikan');
     }

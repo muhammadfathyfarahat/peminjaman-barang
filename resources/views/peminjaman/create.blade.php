@@ -1,4 +1,14 @@
-<h2>Pinjam Alat</h2>
+@extends('layouts.app')
+
+@section('content')
+
+<h2>Data Alat</h2>
+
+<table class="table">
+...
+</table>
+
+@endsection<h2>Pinjam Alat</h2>
 
 @if(session('error')) <p>{{ session('error') }}</p> @endif
 @if(session('success')) <p>{{ session('success') }}</p> @endif
