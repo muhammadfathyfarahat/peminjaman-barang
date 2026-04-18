@@ -44,6 +44,6 @@ Route::middleware(['auth','role:peminjam'])->group(function(){
 
 // PETUGAS
 Route::middleware(['auth','role:petugas'])->group(function(){
-    Route::get('/approve',[PeminjamanController::class,'approveList']);
-    Route::get('/approve/{id}',[PeminjamanController::class,'approve']);
+    Route::post('/approve',[PeminjamanController::class,'approveList']);
+    Route::post('/approve/{id}',[PeminjamanController::class,'approve']);
 });
