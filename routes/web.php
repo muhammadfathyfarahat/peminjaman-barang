@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AlatController;
+
 
 Route::get('/', fn()=>view('login'))->name('login');
 
@@ -20,3 +22,6 @@ Route::middleware(['auth','role:peminjam'])->group(function(){
     Route::view('/peminjam','peminjam');
 });
 
+Route::middleware(['auth','role:admin'])->group(function(){
+    Route::resource('alat', AlatController::class);
+});

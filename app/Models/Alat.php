@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Alat extends Model
 {
-    //
+    public function kategori()
+{
+    return $this->belongsTo(Kategori::class);
+}
 }
