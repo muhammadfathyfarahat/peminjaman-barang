@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AlatController;
+use App\Http\Controllers\KategoriController;
+
 
 
 Route::get('/', fn()=>view('login'))->name('login');
@@ -24,4 +26,8 @@ Route::middleware(['auth','role:peminjam'])->group(function(){
 
 Route::middleware(['auth','role:admin'])->group(function(){
     Route::resource('alat', AlatController::class);
+});
+
+Route::middleware(['auth','role:admin'])->group(function(){
+    Route::resource('kategori', KategoriController::class);
 });
